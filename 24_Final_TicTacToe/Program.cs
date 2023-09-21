@@ -13,12 +13,10 @@ public class Program
         Player currentPlayer = p1;
         Board board = new Board();
 
-        bool winner;
-        do
-        {
-            Console.Clear();
-            board.DrawBoard(currentPlayer);
+        board.DrawBoard(currentPlayer);
 
+        while (true)
+        {
             bool place;
             do
             {
@@ -33,14 +31,17 @@ public class Program
 
             Console.Clear();
             board.DrawBoard(currentPlayer);
-            winner = board.CheckWinner(currentPlayer);
 
-            Console.WriteLine(currentPlayer.Winner);
-            
+            if (board.CheckWinner(currentPlayer))
+            {
+                Console.Clear();
+                board.DrawBoard(currentPlayer);
+                break;
+            }
+
             if (currentPlayer == p1) currentPlayer = p2;
             else currentPlayer = p1;
-
-        } while (!winner);
+        }
 
         Console.ReadLine();
     }
@@ -96,7 +97,6 @@ public class Board
         if (Horizontal() || Vertical() || Diagonal())
         {
             p.Winner = true;
-
             return true;
         }
 
